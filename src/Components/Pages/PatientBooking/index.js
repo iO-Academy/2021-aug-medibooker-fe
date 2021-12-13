@@ -28,7 +28,6 @@ const PatientBooking = () => {
             })
         return () => mounted = false;
     }, [])
-    console.log(getAppointments());
 
   const [appointment, setAppointment] = useState([]);
   const [value, setValue] = useState('default');
@@ -49,7 +48,8 @@ const PatientBooking = () => {
             <h1>Patient Booking Page</h1>
             <form>
               <label htmlFor="doctor">Doctor:</label>
-              <select name="doctor" id="doctor" onChange={formChangeHandler}>
+              <select name="doctor" id="doctor" defaultValue="default" onChange={formChangeHandler}>
+                  <option value="default" disabled hidden>Select...</option>
                   {doctors.map(doctor => <option key={doctor.id}>{doctor.name}</option>)}
               </select>
               <br/>
@@ -57,8 +57,9 @@ const PatientBooking = () => {
               <input type="date" name="date" id="date" onChange={formChangeHandler} />
                 <br/>
               <label htmlFor="time">Time:</label>
-              <select name="time" id="time">
-                {times.map(time => <option key={time}>{time}</option>)}
+              <select name="time" id="time" defaultValue="default">
+                  <option value="default" disabled hidden>Select...</option>
+                  {times.map(time => <option key={time}>{time}</option>)}
               </select>
               <br/>
               <button type="submit">Continue</button>
