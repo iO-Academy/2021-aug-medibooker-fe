@@ -45,12 +45,6 @@ const PatientBooking = (props) => {
           input={props.input}
           setInput={props.setInput}
         />
-        {/* <SelectDate
-          date={date}
-          setDate={setDate}
-          input={props.input}
-          setInput={props.setInput}
-        /> */}
         <DatePicker
           date={date}
           setDate={setDate}

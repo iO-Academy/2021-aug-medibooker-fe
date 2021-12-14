@@ -18,7 +18,6 @@ const PatientDetails = (props) => {
 
   const addAppointmentHandler = (ev) => {
     ev.preventDefault();
-    console.log('addAppointmentHandler worked'); // for debugging
     addAppointment(props.input);
     navigate('/booking-confirmed');
   };
