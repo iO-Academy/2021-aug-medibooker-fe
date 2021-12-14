@@ -8,6 +8,7 @@ const PatientBooking = () => {
   const [appointments, setAppointments] = useState([]);
   const [doctor, setDoctor] = useState();
   const [date, setDate] = useState('default');
+  const [input, setInput] = useState({});
 
   // Fetches all of the doctors - only when the page first loads
   useEffect(() => {
@@ -23,11 +24,26 @@ const PatientBooking = () => {
   // Updates the doctor state each time a different Doctor is selected in the dropdown
   const DoctorChangeHandler = (e) => {
     setDoctor(e.target.value);
+    setInput({
+      ...input,
+      [e.currentTarget.name]: e.currentTarget.value,
+    });
   };
 
   // Updates the date state each time a different Date is selected in the dropdown
   const DateChangeHandler = (e) => {
     setDate(e.target.value);
+    setInput({
+      ...input,
+      [e.currentTarget.name]: e.currentTarget.value,
+    });
+  };
+
+  const TimeChangeHandler = (e) => {
+    setInput({
+      ...input,
+      [e.currentTarget.name]: e.currentTarget.value,
+    });
   };
 
   // Calls getAppointments and setAppointments each time the doctor or date state changes
@@ -43,13 +59,31 @@ const PatientBooking = () => {
 
   let times = getAvailableTimes(appointments);
 
+  async function addAppointment(input) {
+    let response = await fetch('http://localhost:3001/appointments', {
+      method: 'POST',
+      header: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: input,
+    });
+    console.log(input);
+  }
+
+  const addAppointmentHandler = (ev) => {
+    ev.preventDefault();
+    console.log('addAppointmentHandler worked'); // for debugging
+    addAppointment(JSON.stringify(input));
+  };
+
   return (
     <>
       <h1>Patient Booking Page</h1>
-      <form>
+      <form onSubmit={addAppointmentHandler}>
         <label htmlFor="doctor">Doctor:</label>
         <select
-          name="doctor"
+          name="Doctor"
           id="doctor"
           defaultValue="default"
           onChange={DoctorChangeHandler}
@@ -63,10 +97,15 @@ const PatientBooking = () => {
         </select>
         <br />
         <label htmlFor="date">Date:</label>
-        <input type="date" name="date" id="date" onChange={DateChangeHandler} />
+        <input type="date" name="Date" id="date" onChange={DateChangeHandler} />
         <br />
         <label htmlFor="time">Time:</label>
-        <select name="time" id="time" defaultValue="default">
+        <select
+          name="Time"
+          id="time"
+          defaultValue="default"
+          onChange={TimeChangeHandler}
+        >
           <option value="default" disabled hidden>
             Select...
           </option>
