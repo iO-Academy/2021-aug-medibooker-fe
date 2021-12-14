@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import SelectDoctor from '../../SelectDoctor';
 import SelectDate from '../../SelectDate';
 import SelectTime from '../../SelectTime';
+import ValidationMessage from '../../ValidationMessage';
 
 const PatientBooking = (props) => {
-  const [doctor, setDoctor] = useState();
-  const [date, setDate] = useState('default');
-  const navigate = useNavigate();
+  const [doctor, setDoctor] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const navigate = useNavigate('');
+  const [showResults, setShowResults] = React.useState(false);
 
   const returnInputState = () => {
     console.log('changing page');
@@ -18,10 +21,17 @@ const PatientBooking = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     returnInputState();
-    navigate('/patient-details');
+    if (doctor == '' || date == '' || time == '') {
+      setShowResults(true);
+      console.log('Please fill in all the fields');
+      navigate('/patient-booking');
+    } else {
+      navigate('/patient-details');
+    }
   };
 
   const handleResetForm = (e) => {
+    setShowResults(false);
     navigate('/patient-booking');
   };
 
@@ -44,6 +54,8 @@ const PatientBooking = (props) => {
         <SelectTime
           doctor={doctor}
           date={date}
+          time={time}
+          setTime={setTime}
           input={props.input}
           setInput={props.setInput}
         />
@@ -52,6 +64,7 @@ const PatientBooking = (props) => {
         <button type="submit" onClick={handleSubmit}>
           Continue to add patient details
         </button>
+        {showResults ? <ValidationMessage /> : null}
       </form>
     </>
   );

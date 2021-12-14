@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getAppointments } from '../../Services/appointments';
+import { getAvailableAppointments } from '../../Services/appointments';
 import { getAvailableTimes } from '../../Services/times';
 
 const SelectTime = (props) => {
   const [appointments, setAppointments] = useState([]);
 
   const TimeChangeHandler = (e) => {
+    props.setTime(e.target.value);
     props.setInput({
       ...props.input,
       [e.currentTarget.name]: e.currentTarget.value,
@@ -15,7 +16,7 @@ const SelectTime = (props) => {
   // Calls getAppointments and setAppointments each time the doctor or date state changes
   useEffect(() => {
     let mounted = true;
-    getAppointments(props.doctor, props.date).then((appointment) => {
+    getAvailableAppointments(props.doctor, props.date).then((appointment) => {
       if (mounted) {
         setAppointments(appointment);
       }

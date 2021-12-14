@@ -63,6 +63,7 @@ const PatientDetails = (props) => {
           type="text"
           placeholder="Type here..."
           onChange={NameChangeHandler}
+          required
         ></input>
         <br />
         <label htmlFor="email">Email</label>
@@ -73,6 +74,7 @@ const PatientDetails = (props) => {
           type="email"
           placeholder="Type here..."
           onChange={EmailChangeHandler}
+          required
         ></input>
         <br />
         <label htmlFor="symptoms">
@@ -85,6 +87,7 @@ const PatientDetails = (props) => {
           type="text"
           placeholder="Type here..."
           onChange={SymptomsChangeHandler}
+          required
         ></input>
         <br />
         <button onClick={handleCancelButton}>Cancel</button>
