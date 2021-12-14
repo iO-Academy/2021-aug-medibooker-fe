@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SelectDoctor from '../../SelectDoctor';
-import SelectDate from '../../SelectDate';
 import SelectTime from '../../SelectTime';
 import ValidationMessage from '../../ValidationMessage';
+import DatePicker from '../../DatePicker';
 
 const PatientBooking = (props) => {
   const [doctor, setDoctor] = useState('');
@@ -45,7 +45,13 @@ const PatientBooking = (props) => {
           input={props.input}
           setInput={props.setInput}
         />
-        <SelectDate
+        {/* <SelectDate
+          date={date}
+          setDate={setDate}
+          input={props.input}
+          setInput={props.setInput}
+        /> */}
+        <DatePicker
           date={date}
           setDate={setDate}
           input={props.input}
