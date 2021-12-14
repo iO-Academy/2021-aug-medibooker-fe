@@ -62,11 +62,11 @@ const PatientBooking = () => {
   async function addAppointment(input) {
     let response = await fetch('http://localhost:3001/appointments', {
       method: 'POST',
-      header: {
+      headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: input,
+      body: JSON.stringify(input),
     });
     console.log(input);
   }
@@ -74,7 +74,7 @@ const PatientBooking = () => {
   const addAppointmentHandler = (ev) => {
     ev.preventDefault();
     console.log('addAppointmentHandler worked'); // for debugging
-    addAppointment(JSON.stringify(input));
+    addAppointment(input);
   };
 
   return (
