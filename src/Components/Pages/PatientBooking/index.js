@@ -1,120 +1,57 @@
 import React, { useEffect, useState } from 'react';
-import { getDoctors } from '../../../Services/doctors';
-import { getAppointments } from '../../../Services/appointments';
-import { getAvailableTimes } from '../../../Services/times';
+import { useNavigate } from 'react-router-dom';
+import SelectDoctor from '../../SelectDoctor';
+import SelectDate from '../../SelectDate';
+import SelectTime from '../../SelectTime';
 
-const PatientBooking = () => {
-  const [doctors, setDoctors] = useState([]);
-  const [appointments, setAppointments] = useState([]);
+const PatientBooking = (props) => {
   const [doctor, setDoctor] = useState();
   const [date, setDate] = useState('default');
-  const [input, setInput] = useState({});
+  const navigate = useNavigate();
 
-  // Fetches all of the doctors - only when the page first loads
-  useEffect(() => {
-    let mounted = true;
-    getDoctors().then((doctor) => {
-      if (mounted) {
-        setDoctors(doctor);
-      }
-    });
-    return () => (mounted = false);
-  }, []);
-
-  // Updates the doctor state each time a different Doctor is selected in the dropdown
-  const DoctorChangeHandler = (e) => {
-    setDoctor(e.target.value);
-    setInput({
-      ...input,
-      [e.currentTarget.name]: e.currentTarget.value,
-    });
+  const returnInputState = () => {
+    console.log('changing page');
+    console.log(props.input);
+    return props.input;
   };
 
-  // Updates the date state each time a different Date is selected in the dropdown
-  const DateChangeHandler = (e) => {
-    setDate(e.target.value);
-    setInput({
-      ...input,
-      [e.currentTarget.name]: e.currentTarget.value,
-    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    returnInputState();
+    navigate('/patient-details');
   };
 
-  const TimeChangeHandler = (e) => {
-    setInput({
-      ...input,
-      [e.currentTarget.name]: e.currentTarget.value,
-    });
-  };
-
-  // Calls getAppointments and setAppointments each time the doctor or date state changes
-  useEffect(() => {
-    let mounted = true;
-    getAppointments(doctor, date).then((appointment) => {
-      if (mounted) {
-        setAppointments(appointment);
-      }
-    });
-    return () => (mounted = false);
-  }, [doctor, date]);
-
-  let times = getAvailableTimes(appointments);
-
-  async function addAppointment(input) {
-    let response = await fetch('http://localhost:3001/appointments', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(input),
-    });
-    console.log(input);
-  }
-
-  const addAppointmentHandler = (ev) => {
-    ev.preventDefault();
-    console.log('addAppointmentHandler worked'); // for debugging
-    addAppointment(input);
+  const handleResetForm = (e) => {
+    navigate('/patient-booking');
   };
 
   return (
     <>
-      <h1>Patient Booking Page</h1>
-      <form onSubmit={addAppointmentHandler}>
-        <label htmlFor="doctor">Doctor:</label>
-        <select
-          name="Doctor"
-          id="doctor"
-          defaultValue="default"
-          onChange={DoctorChangeHandler}
-        >
-          <option value="default" disabled hidden>
-            Select...
-          </option>
-          {doctors.map((doctor) => (
-            <option key={doctor.id}>{doctor.name}</option>
-          ))}
-        </select>
+      <h1>TO MAKE AN APPOINTMENT, COMPLETE THE FORM BELOW</h1>
+      <form>
+        <SelectDoctor
+          doctor={doctor}
+          setDoctor={setDoctor}
+          input={props.input}
+          setInput={props.setInput}
+        />
+        <SelectDate
+          date={date}
+          setDate={setDate}
+          input={props.input}
+          setInput={props.setInput}
+        />
+        <SelectTime
+          doctor={doctor}
+          date={date}
+          input={props.input}
+          setInput={props.setInput}
+        />
+        <button onClick={handleResetForm}>Reset form</button>
         <br />
-        <label htmlFor="date">Date:</label>
-        <input type="date" name="Date" id="date" onChange={DateChangeHandler} />
-        <br />
-        <label htmlFor="time">Time:</label>
-        <select
-          name="Time"
-          id="time"
-          defaultValue="default"
-          onChange={TimeChangeHandler}
-        >
-          <option value="default" disabled hidden>
-            Select...
-          </option>
-          {times.map((time) => (
-            <option key={time}>{time}</option>
-          ))}
-        </select>
-        <br />
-        <button type="submit">Continue</button>
+        <button type="submit" onClick={handleSubmit}>
+          Continue to add patient details
+        </button>
       </form>
     </>
   );

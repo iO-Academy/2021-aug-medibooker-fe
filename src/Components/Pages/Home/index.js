@@ -1,13 +1,19 @@
-import React from "react";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
 
-    return (
-        <>
-            <h1>Splash screen</h1>
-        </>
-    )
+  const handleAppointmentClick = (e) => {
+    navigate('/patient-booking');
+  };
 
-}
+  return (
+    <>
+      <h1>WELCOME TO MEDIBOOKER</h1>
+      <button onClick={handleAppointmentClick}>BOOK AN APPOINTMENT</button>
+    </>
+  );
+};
 
 export default Home;
