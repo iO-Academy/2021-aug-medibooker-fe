@@ -6,6 +6,7 @@ const DatePicker = (props) => {
   const [today, setToday] = useState('');
   const [selectedDay, setSelectedDay] = useState('');
 
+
   // Converts DayPicker date output to YYYY-M-DD and updates the date state each time a different date is selected in the calender
   const DateChangeHandler = (day, { selected }) => {
     let year = day.getFullYear();
@@ -31,16 +32,18 @@ const DatePicker = (props) => {
 
   return (
     <>
-      <label>Choose date of appointment</label>
-      <br />
-      <DayPicker
-        selectedDays={selectedDay}
-        fromMonth={today}
-        fixedWeeks
-        onDayClick={DateChangeHandler}
-        disabledDays={[{ daysOfWeek: [0, 6] }, { before: today }]}
-      />
-      <br />
+      <label>Choose date of appointment:</label>
+      <div className='w-full flex justify-center px-4 py-2 mt-2 bg-white border border-gray-300 rounded-md focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'>
+        <DayPicker
+          required={true}
+          className=''
+          selectedDays={selectedDay}
+          fromMonth={today}
+          fixedWeeks
+          onDayClick={DateChangeHandler}
+          disabledDays={[{ daysOfWeek: [0, 6] }, { before: today }]}
+        />
+      </div>
     </>
   );
 };
