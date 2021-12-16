@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getAvailableAppointments } from '../../Services/appointments';
-import { getAvailableTimes } from '../../Services/times';
+import { getAvailableAppointments } from '../../../Services/appointments';
+import { getAvailableTimes } from '../../../Services/times';
 
 const SelectTime = (props) => {
   const [appointments, setAppointments] = useState([]);
@@ -28,13 +28,14 @@ const SelectTime = (props) => {
 
   return (
     <>
-      <label htmlFor="time">Choose time of appointment</label>
-      <br />
+      <label htmlFor="time">Choose time of appointment:</label>
       <select
+        required={true}
         name="Time"
         id="time"
         defaultValue="default"
         onChange={TimeChangeHandler}
+        className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
       >
         <option value="default" disabled hidden>
           Select...
@@ -43,7 +44,6 @@ const SelectTime = (props) => {
           <option key={time}>{time}</option>
         ))}
       </select>
-      <br />
     </>
   );
 };

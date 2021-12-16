@@ -4,7 +4,7 @@ const ValidationMessage = (props) => {
   return (
     <>
       <div>
-        <h1>Please fill in all the fields</h1>
+        <h1 className='text-red-700 text-xl block text-center w-full'>Please fill in all the fields</h1>
       </div>
     </>
   );

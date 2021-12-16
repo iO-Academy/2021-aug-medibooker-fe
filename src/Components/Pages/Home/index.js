@@ -1,18 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import Footer from "../../GeneralComponents/Footer";
+import Navbar from "../../GeneralComponents/Navbar";
+import NavGrid from "../../HomeComponents/NavGrid";
 
 const Home = () => {
-  const navigate = useNavigate();
-
-  const handleAppointmentClick = (e) => {
-    navigate('/patient-booking');
-  };
-
   return (
-    <>
-      <h1>WELCOME TO MEDIBOOKER</h1>
-      <button onClick={handleAppointmentClick}>BOOK AN APPOINTMENT</button>
-    </>
+      <div className='h-screen flex justify-between flex-col bg-blue-100'>
+        <Navbar heading='Welcome to MediBooker' style='hidden' />
+        <NavGrid />
+        <Footer />
+      </div>
   );
 };
 
